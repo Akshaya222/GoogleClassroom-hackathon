@@ -10,10 +10,14 @@ import {
 } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import MenuIcon from "@material-ui/icons/Menu";
+import {useDispatch} from "react-redux";
 import { useStyles } from "./style";
+import {toHandleCreateBox,toHandleJoinBox} from "../../../store/actions/class"
 import JoinClass from "../../JoinClass/JoinClass";
 import CreateClass from "../../CreateClass/CreateClass";
 const HomeNavbar = ({ children }) => {
+  console.log("from home navbar")
+  const dispatch=useDispatch();
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -24,12 +28,14 @@ const HomeNavbar = ({ children }) => {
   };
 
   const handleCreate = () => {
+    dispatch(toHandleCreateBox(true))
     handleClose();
 
     // setCreateClassDialog(true);
   };
 
   const handleJoin = () => {
+    dispatch(toHandleJoinBox(true))
     handleClose();
 
     // setJoinClassDialog(true);
@@ -72,8 +78,8 @@ const HomeNavbar = ({ children }) => {
           </div>
         </Toolbar>
       </AppBar>
-      <JoinClass />
-      <CreateClass />
+     <JoinClass/>
+     <CreateClass/>
     </div>
   );
 };

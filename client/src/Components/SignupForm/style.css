@@ -8,6 +8,11 @@
   text-align: center;
   width: 50%;
 }
+.cardActionsLgn{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
 .signup {
   padding-top: 10%;

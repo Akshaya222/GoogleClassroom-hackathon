@@ -1,11 +1,14 @@
 import React from "react";
 import clsx from "clsx";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import {useHistory} from "react-router-dom";
 // import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
+import { selectClass,setSelectedClassId } from "../../store/actions/classwork";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
@@ -32,7 +35,9 @@ const useStyles = makeStyles({
   }
 });
 
-export default function SwipeableTemporaryDrawer() {
+export default function Drawer({classesList}) {
+  const history=useHistory();
+  const dispatch=useDispatch();
   const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
@@ -79,14 +84,14 @@ export default function SwipeableTemporaryDrawer() {
       <Divider />
       <p className={classes.after_divider}>Enrolled </p>
       <List>
-        {["Class 1", "Class 2", "Class 3"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {" "}
-              <SchoolIcon />{" "}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
+        {classesList.map((text, index) => (
+             <ListItem button key={text.name} onClick={()=>{dispatch(selectClass(text._id));dispatch(setSelectedClassId(text._id));history.push("/main")}}>
+             <ListItemIcon>
+               {" "}
+               <SchoolIcon />{" "}
+             </ListItemIcon>
+             <ListItemText primary={text.name} />
+           </ListItem>
         ))}
       </List>
     </div>

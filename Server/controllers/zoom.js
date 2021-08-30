@@ -1,6 +1,10 @@
 var request = require("request");
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const {nanoid}=require('nanoid');
+const calenderModel=require('../models/calender');
+const userModel=require('../models/user');
+const classModel=require("../models/class");
 
 //to generate jwt token
 const payload = {
@@ -24,6 +28,7 @@ exports.verifyMeetingDetails=(req, res) => {
     const hash = crypto.createHmac('sha256', process.env.ZOOM_API_SECRET).update(msg).digest('base64')
     const signature = Buffer.from(`${process.env.ZOOM_API_KEY}.${req.body.meetingNumber}.${timestamp}.${req.body.role}.${hash}`).toString('base64')
     if(signature){
+      console.log("signature verified")
         res.status(200).json({
             status:"success",
             message:"Signature Generated Successfully",
@@ -38,13 +43,31 @@ exports.verifyMeetingDetails=(req, res) => {
     }
   }
 
-exports.createMeeting=(req,res)=>{
-    if(!req.body){
-        res.status(400).json({
-            status:"failure",
-            message:"Please send details"
+exports.createMeeting=async(req,res)=>{
+  const {topic,time,agenda}=req.body;
+  if(!topic,!time,!agenda){
+    res.status(400).json({
+      status:"failure",
+      message:"Required missing fields"
+    })
+  }
+  const userId=req.user.id;
+        const classId=req.params.classId;
+        const user=await userModel.findById(userId);
+        if(!user){
+          res.status(404).json({
+            message:"User not found",
+            status:"failure"
           })
-    }
+        }
+        const gclass=await classModel.findById(classId);
+        if(!gclass){
+          res.status(404).json({
+            message:"Class not found",
+            status:"failure"
+          })
+        }
+    let password=nanoid(5);
       var options= {
         method: 'POST',
         url: 'https://api.zoom.us/v2/users/18bcs017@iiitdwd.ac.in/meetings',
@@ -52,13 +75,13 @@ exports.createMeeting=(req,res)=>{
           'content-type': 'application/json',
           authorization: `Bearer ${token}`
         },  body: {
-          "topic": req.body.topic,
+          "topic": topic,
           "type": "2",
-          "start_time": req.body.time,
+          "start_time": time,
           "duration": "40",
           "timezone": "America/Los_Angeles",
-          "password": req.body.password,
-          "agenda": req.body.agenda,
+          "password": password,
+          "agenda": agenda,
           "settings": {
             "host_video": "true",
             "participant_video": "true",
@@ -79,12 +102,25 @@ exports.createMeeting=(req,res)=>{
         json: true
       };
 
-      request(options, function (error, response, body) {
-         if(body){
+      request(options,async function (error, response, body) {
+         if(body){//creator class title agenda time
+           console.log(body.id,body.start_url,body.join_url,body.password)
+           const meetItem={
+            meetId:body.id,
+            meetJoinUrl:body.join_url,
+            meetStartUrl:body.start_url,
+            meetPassword:body.password,
+            creator:userId,
+            meetTime:time,
+            meetTopic:topic,
+            meetAgenda:agenda,
+            class:classId
+           }
+           const calender= await calenderModel.create(meetItem)
             res.status(200).json({
                 status:"success",
                 message:"Meeting has been created successfully",
-                data:body
+                data:calender
              });
          }if(error){
              res.status(500).json({
@@ -95,73 +131,3 @@ exports.createMeeting=(req,res)=>{
          }
       });
   }
-
-
-  //sending all meetings scheduled
-exports.getAllMeetings=(req,res)=>{
-    var options = {
-    method: 'GET',
-    url: 'https://api.zoom.us/v2/users/18bcs017@iiidwd.ac.in/meetings',
-    headers: {
-      authorization: `Bearer ${token}`
-    }
-  };
-  request(options, function (error, response, body) {
-     if(body){
-        if(JSON.parse(body).total_records!==0){
-            res.status(200).json({
-            status:"success",
-            message:"meeting has been sent successfully",
-            data:JSON.parse(body).meetings
-         }); 
-         }
-         else{
-            res.status(200).json({
-            status:"success",
-            message:"no meetings found"});
-         }
-     }
-     else{
-         res.status(500).json({
-             status:"failure",
-             message:"Some Internal Error Occured from zoom API",
-             error:error
-         })
-     }
-  });
-  }
-//get specific meeting
-exports.getMeetingDetails=(req,res)=>{
-      
-    if(!req.params.id){
-        res.status(400).json({
-            status:"failure",
-            message:"Meeting not found"
-          })
-    }else{
-        var options = {
-            method: 'GET',
-            url: `https://api.zoom.us/v2/meetings/${req.params.id}`,
-            headers: {
-              authorization: `Bearer ${token}`
-            }
-          };
-          request(options, function (error, response, body) {
-            if(body){
-               res.status(200).json({
-                   status:"success",
-                   message:"meeting has been created successfully",
-                   data:JSON.parse(body)
-                }); 
-            }
-            else{
-               res.status(500).json({
-                   status:"failure",
-                   message:"Some Internal Occured from Zoom API",
-                   error:error
-                }); 
-            }
-         });
-    }
-  }
-

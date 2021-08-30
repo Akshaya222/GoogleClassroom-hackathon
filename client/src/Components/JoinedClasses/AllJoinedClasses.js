@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import JoinedClasses from "./JoinedClasses";
 import { getAllClasses } from "../../store/actions/class";
+import HomeNavbar from "../Navbar/Home-Navbar/home.navbar";
+import Drawer from "../Drawer/Drawer";
 import { useDispatch, useSelector } from "react-redux";
-
+import "./style.css";
 const AllJoinedClass = () => {
   const dispatch = useDispatch();
   const classesList = useSelector((state) => state.state.classes);
@@ -17,13 +19,17 @@ const AllJoinedClass = () => {
     return <div>Loading...</div>;
   } else {
     return (
-      <div>
+     <div style={{minHeight:"100vh"}} >
+        <Drawer classesList={classesList.classes} />
+      <div className="classees_container" >
         {/* {console.log(classesList.classes)} */}
         {classesList.classes.map((item) => (
           <JoinedClasses classData={item} />
         ))}
         {/* <JoinedClasses classData={classesList[0]} /> */}
       </div>
+     </div>
+
     );
   }
 };

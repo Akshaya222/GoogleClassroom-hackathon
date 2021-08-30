@@ -1,4 +1,4 @@
-import React from "react";
+import React,{} from "react";
 import { BrowserRouter,Switch,Route} from 'react-router-dom';
 
 // importt HomeNavbar from "./Components/Navbar/Home-Navbar/home.navbar";
@@ -43,6 +43,7 @@ export default function App() {
       {/* <Calendar /> */}
       {/* <Classwork /> */}
       {/* <People /> */}
+      
 
 
 // import React,{useEffect} from 'react';

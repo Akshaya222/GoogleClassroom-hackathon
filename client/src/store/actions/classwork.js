@@ -1,12 +1,22 @@
 import axios from "axios";
 export const GET_FULL_INFO = "GET_FULL_INFO";
+export const SET_SELECTEDCLASS_ID="SET_SELECTEDCLASS_ID";
 const token = JSON.parse(localStorage.getItem("token"));
 
 export const selectClass = (classId) => {
+  console.log("from actions",classId)
   return (dispatch) => {
     dispatch(getFullInfo(classId));
   };
 };
+
+export const setSelectedClassId=(classId)=>{
+  console.log("from setselectedclassId",classId)
+  return {
+    type:SET_SELECTEDCLASS_ID,
+    payload:classId
+  }
+}
 
 export const createClassWork = (
   title,
@@ -36,6 +46,7 @@ export const createClassWork = (
         }
       );
       if (response) {
+        console.log("sucess from createclasswork",response)
         dispatch(getFullInfo(classId));
       }
     } catch (e) {
@@ -151,6 +162,7 @@ export const getFullInfo = (classId) => {
           headers: { Authorization: `Bearer ${token}` }
         }
       );
+      console.log("response",response)
       dispatch({ type: GET_FULL_INFO, payload: response.data.data });
     } catch (e) {
       console.log(e);

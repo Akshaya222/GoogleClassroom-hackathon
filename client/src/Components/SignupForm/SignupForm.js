@@ -143,7 +143,7 @@ function SignupForm() {
             />
             <br />
             <br />
-            <CardActions>
+            <CardActions className="cardActionsLgn">
               <div className="loginBtn">
                 <Button
                   type="submit"

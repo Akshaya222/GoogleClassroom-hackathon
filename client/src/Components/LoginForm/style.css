@@ -6,6 +6,11 @@
   margin: auto;
   width: 50%;
 }
+.cardActionsLgn{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .card-body {
   padding-top: 10%;
   margin: auto;

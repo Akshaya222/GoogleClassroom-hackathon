@@ -96,3 +96,10 @@ ol {
 .joined__bottom > * {
   margin-right: 20px;
 }
+.classees_container{
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+  overflow-y: scroll;
+  min-height: 100vh;
+}

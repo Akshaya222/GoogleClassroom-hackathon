@@ -20,22 +20,9 @@ const Announcment = ({ classDetails }) => {
     })
    
   };
-  getOwner()
+ getOwner()
 
   console.log("from announcements",classDetails)
-  // useEffect(() => {
-  //   if (classData) {
-  //     let unsubscribe = db
-  //       .collection("announcments")
-  //       .doc("classes")
-  //       .collection(classData.id)
-  //       .onSnapshot((snap) => {
-  //         setAnnouncment(snap.docs.map((doc) => doc.data()));
-  //       });
-  //     return () => unsubscribe();
-  //   }
-  // }, [classData]);
-  // console.log(announcment);
   return (
     <div>
       {classDetails.map((item) => (

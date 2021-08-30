@@ -2,6 +2,22 @@ import axios from "axios";
 export const GET_ALL_CLASSES = "GET_ALL_CLASSES";
 const token = JSON.parse(localStorage.getItem("token"));
 
+export const toHandleCreateBox=(bool)=>{
+  console.log("dispatching create")
+  return {
+    type:"OPEN_CREATE_BOX",
+    payload:bool
+  }
+}
+
+export const toHandleJoinBox=(bool)=>{
+  return {
+    type:"OPEN_JOIN_BOX",
+    payload:bool
+  }
+}
+
+
 export const createClass = (name, description) => {
   return async (dispatch) => {
     try {

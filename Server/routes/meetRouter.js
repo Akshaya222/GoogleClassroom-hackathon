@@ -1,13 +1,13 @@
 const express=require('express')
 
 const zoomController=require('../controllers/zoom');
+const authController = require('../controllers/auth');
 
 const router = express.Router();
 
-router.post('/create',zoomController.createMeeting);
-router.post('/verify-token',zoomController.verifyMeetingDetails)
-router.get('/all-meetings',zoomController.getAllMeetings);
-router.get('/meeting-info',zoomController.getMeetingDetails);
+router.use(authController.protect)
+router.post('/verify-token',zoomController.verifyMeetingDetails);
+router.post('/create/:classId',zoomController.createMeeting);
 
 
 module.exports=router

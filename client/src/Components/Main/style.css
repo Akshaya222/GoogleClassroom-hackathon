@@ -1,3 +1,4 @@
+
 .main__wrapper {
   margin: 0 auto;
   display: flex;
@@ -44,6 +45,7 @@
   padding: 1.5rem;
   text-align: left;
 }
+
 .main__heading {
   font-family: "Google Sans", Roboto, Arial, sans-serif;
   font-size: 2.25rem;
@@ -141,6 +143,11 @@
 .title_field {
   width: 74%;
 }
+.start__btn {
+  margin-left: 2%;
+  background-color: lightgreen;
+}
+
 @media only screen and (max-width: 842px) {
   .main__status {
     display: none;

@@ -3,7 +3,7 @@ import { FolderOpen, PermContactCalendar } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { Link,useHistory } from "react-router-dom";
-import { selectClass } from "../../store/actions/classwork";
+import { selectClass,setSelectedClassId } from "../../store/actions/classwork";
 import "./style.css";
 import axios from "axios";
 
@@ -44,7 +44,7 @@ const JoinedClasses = ({ classData }) => {
             {/* Following is only temporary */}
             {/* ----------------------------------------------- */}
             <div className="joined__title" >
-              <h2 onClick={()=>{dispatch(selectClass(classData._id));history.push("/main")}} >{classData.name}</h2>
+              <h2 onClick={()=>{dispatch(selectClass(classData._id));dispatch(setSelectedClassId(classData._id));history.push("/main")}} >{classData.name}</h2>
               <div className="joined__owner">
                 <p>{ownerName}</p>
               </div>

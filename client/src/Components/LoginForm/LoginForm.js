@@ -129,7 +129,7 @@ export default function LoginForm() {
               Forgot Password?
             </Typography>
             <br />
-            <CardActions>
+            <CardActions className="cardActionsLgn">
               <div className="loginBtn">
                 <Button
                   type="submit"

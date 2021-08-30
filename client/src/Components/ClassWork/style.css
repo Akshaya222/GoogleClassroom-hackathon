@@ -3,7 +3,6 @@
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  text-align: center;
 }
 .amt {
   background-color: #fff;
@@ -31,4 +30,8 @@
   width: 150px;
   object-fit: contain;
   margin-left: 10px;
+}
+.classwork__heading{
+  text-align: center;
+  text-color: #5f6368;
 }

@@ -1,5 +1,6 @@
 const {nanoid}=require('nanoid');
 var ObjectId = require('mongoose').Types.ObjectId;
+const calenderModel=require("../models/calender");
 
 const classModel = require('../models/class');
 const classworkModel=require('../models/classwork');
@@ -256,14 +257,22 @@ exports.getFullClassInfo=async(req,res)=>{
         throw error;
     }
     const classworks=await classworkModel.find({});
+    const meetings=await calenderModel.find({});
     let classInfo={};
     classInfo.class=gclass
     classInfo.classworks=[]
+    classInfo.calender=[];
     classworks.forEach((clswrk)=>{
         if(clswrk.class.equals(new ObjectId(classId))){
             classInfo.classworks.push(clswrk)
         }
     })
+    meetings.forEach((meet)=>{
+        if(meet.class.equals(new ObjectId(classId))){
+            classInfo.calender.push(meet)
+        }
+    })
+    console.log("+++++++++++++++++++++++++++++++++++++++++++++++====")
     successHandler(res,{class:classInfo},"Class Information fetched successfully",200)
     }
     catch(e){

@@ -1,30 +1,81 @@
 import { Avatar, Button, TextField } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import axios from 'axios';
 // import db, { storage } from "../../lib/firebase";
 import "./style.css";
 // import firebase from "firebase";
 // import { useLocalContext } from "../../context/context";
 import  Announcement  from "../Announcement/Announcement";
-import { getFullInfo } from "../../store/actions/classwork";
+import Meeting from "../Meet/Meeting";
+import { getFullInfo,createClassWork } from "../../store/actions/classwork";
 import ClassNavbar from "../Navbar/Class-Navbar/ClassNavbar";
+import VideoCallIcon from "@material-ui/icons/VideoCall";
+import VideocamIcon from "@material-ui/icons/Videocam";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Typography from "@material-ui/core/Typography";
 
 const Main = ({ classData }) => {
   const dispatch = useDispatch();
   const classInfo = useSelector((state) => state);
-  console.log("classInfo is..", classInfo.state.selectedClass.class);
-
+  const user=JSON.parse(localStorage.getItem("user"))
+  const token = JSON.parse(localStorage.getItem("token"));
+  console.log("classInfo is..", classInfo.state.selectedClass.class,classInfo.state.selectedClassId);
   const [showInput, setShowInput] = useState(false);
   const [classDetails,setClassDetails]=useState({});
   const [inputValue, setInput] = useState("");
   const [titleValue, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("");
+  const [meetTopic,setMeetTopic]=useState("");
+  const [meetAgenda,setMeetAgenda]=useState("");
+  const [meetTime,setMeetTime]=useState("");
+  const [tabValue,setTabValue]=useState(0);
   const fileInputRef = React.useRef();
 
+  const createMeetHandler=async()=>{
+    console.log(meetTopic,meetAgenda,meetTime,classDetails.class.class._id)
+
+    axios.post(`http://localhost:3002/meet/create/${classDetails.class.class._id}`,{
+      topic:meetTopic,
+      agenda:meetAgenda,
+      time:`${meetTime}:00Z`
+    },
+    {headers: { Authorization: `Bearer ${token}`}})
+    .then((res)=>{
+        dispatch(getFullInfo(classDetails.class.class._id))
+        handleClose()
+        console.log("res from create meeting",res)
+    }).catch((err)=>{
+      console.log(err.response.data.message)
+    })
+  }
+
+  const loadDetails=async(classId)=>{
+    try {
+      const response = await axios.get(
+        `http://localhost:3002/class/${classId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+      console.log("response",response.data.data)
+      setClassDetails(response.data.data)
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   useEffect(()=>{
-      console.log("from useeffect classInfo",classInfo.state.selectedClass.class)
-      setClassDetails(classInfo.state.selectedClass.class)
+    if(classInfo.state.selectedClassId){
+      loadDetails(classInfo.state.selectedClassId)
+    }
+      // console.log("from useeffect classInfo",classInfo.state.selectedClass.class)
+      // setClassDetails(classInfo.state.selectedClass.class)
   },[classInfo])
 
   const handleChange = (e) => {
@@ -46,28 +97,33 @@ const Main = ({ classData }) => {
       setPreview(null);
     }
   }, [image]);
+  const [open, setOpen] = React.useState(false);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handleUpload = () => {
+    let formData=new FormData();
+    formData.append("image",image)
+    axios.post("http://localhost:3002/user/uploadImage",
+      formData
+    ).then((res)=>{
+      console.log(res.data.image);
+     
+      dispatch(createClassWork(titleValue,
+        "material",
+        inputValue,
+        res.data.image,null,null,
+        {},
+        classDetails.class.class._id))
+    }).catch((err)=>{
+      console.log(err)
+    })
     console.log("posted");
-    // const uploadImage = storage.ref(`images/${image.name}`).put(image);
-
-    //   uploadImage.on("state_changed", () => {
-    //     storage
-    //       .ref("images")
-    //       .child(image.name)
-    //       .getDownloadURL()
-    //       .then((url) => {
-    //         db.collection("announcments")
-    //           .doc("classes")
-    //           .collection(classData.id)
-    //           .add({
-    //             timstamp: firebase.firestore.FieldValue.serverTimestamp(),
-    //             imageUrl: url,
-    //             text: inputValue,
-    //             sender: loggedInMail,
-    //           });
-    //       });
-    //   });
   };
   if(Object.keys(classDetails).length===0){
     return (
@@ -87,19 +143,83 @@ const Main = ({ classData }) => {
             </div>
             <div className="main__text">
               <h1 className="main__heading main__overflow">
-                {classDetails.class.name}
+                {classDetails.class.class.name}
               </h1>
               <div className="main__section main__overflow">
-                {classDetails.class.description}
+                {classDetails.class.class.description}
               </div>
+               <div style={{display:"flex",alignItems:"center"}}>
+               {
+                user._id==classDetails.class.class.owner?
+                <Button variant="contained" onClick={handleClickOpen}>
+                <VideoCallIcon />
+                Create Meeting
+              </Button>:null
+              }
+                <div>
+                <Meeting role={1} user={user} />
+                </div>
+               </div>
+                <Dialog
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="form-dialog-title"
+                >
+                  <DialogTitle id="form-dialog-title">Create Meeting</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>Create a Meeting</DialogContentText>
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      value={meetTopic}
+                      onChange={(e)=>setMeetTopic(e.target.value)}
+                      id="name"
+                      label="Title"
+                      fullWidth
+                    />
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      value={meetAgenda}
+                      onChange={(e)=>setMeetAgenda(e.target.value)}
+                      id="name"
+                      label="Agenda"
+                      fullWidth
+                    />
+                    <Typography
+                      variant="subtitle1"
+                      color="textSecondary"
+                      gutterBottom
+                    >
+                      Due Date
+                    </Typography>
+                    <TextField
+                      autoFocus
+                      name="meet"
+                      value={meetTime}
+                      onChange={(e)=>setMeetTime(e.target.value)}
+                      margin="dense"
+                      id="meet_time"
+                      type="datetime-local"
+                    />
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                      Cancel
+                    </Button>
+                    <Button onClick={createMeetHandler} color="primary">
+                      Create
+                    </Button>
+                  </DialogActions>
+                </Dialog>
               <div className="main__wrapper2">
-                <em className="main__code">Class Code :</em>
-                <div className="main__id">{classDetails.class.code}</div>
+                <div className="main__id">Class Code : {classDetails.class.class.code}</div>
               </div>
             </div>
           </div>
-          <ClassNavbar />
+          <ClassNavbar tabValue={tabValue} setTabValue={setTabValue} />
         </div>
+        {tabValue===0?
         <div className="main__announce">
           <div className="main__status">
             <p>Upcoming</p>
@@ -148,11 +268,10 @@ const Main = ({ classData }) => {
                             }}
                             variant="contained"
                           >
-                            Choose File
+                            Choose Image
                           </Button>
                         )}
                         <input
-                          style={{ display: "none" }}
                           onChange={handleChange}
                           variant="outlined"
                           color="primary"
@@ -186,10 +305,11 @@ const Main = ({ classData }) => {
                 )}
               </div>
             </div>
-            <Announcement classDetails={classDetails.classworks} />
+            {/* <Announcement classDetails={classDetails.class.classworks} /> */}
             {/* <Announcement/> */}
           </div>
         </div>
+      :null}
       </div>
     </div>
   );

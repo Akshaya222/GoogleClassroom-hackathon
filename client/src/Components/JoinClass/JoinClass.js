@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Avatar, Button, Dialog, Slide, TextField } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 import { joinClass } from "../../store/actions/class";
+import {toHandleCreateBox,toHandleJoinBox} from "../../store/actions/class"
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -12,20 +13,27 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function JoinClass() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state);
+  console.log("state is..from join", user.state.openJoinClass);
   const curUser = JSON.parse(localStorage.getItem("user"));
-  console.log("state is..", user);
   const [classCode, setClassCode] = useState("");
   const [email, setemail] = useState("");
   const [error, setError] = useState();
   // const [joinedData, setJoinedData] = useState();
   // const [classExists, setClassExists] = useState(false);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(()=>{
+    if(user.state.openJoinClass){
+      setOpen(user.state.openJoinClass)
+    }
+},[user])
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    dispatch(toHandleJoinBox(false))
     setOpen(false);
     // props.open = false;
   };
@@ -33,12 +41,13 @@ export default function JoinClass() {
     e.preventDefault();
     dispatch(joinClass(classCode));
     console.log("submitted");
+    dispatch(toHandleJoinBox(false))
+    setOpen(false);
+    setClassCode("")
   };
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open join class form
-      </Button>
+     <div>&nbsp;</div>
       <Dialog
         fullScreen
         // open={joinClassDialog}
