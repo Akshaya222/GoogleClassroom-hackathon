@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useRef} from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -17,14 +17,19 @@ import AssignmentTeacher from "../AssignmentTeacher/AssignmentTeacher";
 // Create handlesubmit func
 
 export default function Classwork() {
-  const [openAssignment, setOpenAssignment] = React.useState(false);
-  const [openMaterial, setOpenMaterial] = React.useState(false);
-  const [openTest, setOpenTest] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [preview, setPreview] = React.useState("");
+  const [openAssignment, setOpenAssignment] = useState(false);
+  const [openMaterial, setOpenMaterial] = useState(false);
+  const [openTest, setOpenTest] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [preview, setPreview] = useState("");
 
-  const [image, setImage] = React.useState(null);
-  const fileInputRef = React.useRef();
+  const [image, setImage] = useState(null);
+  const fileInputRef = useRef();
+  const [title, setTitle]=useState("");
+  const [description, setDescription]=useState("");
+  const [dueDate, setDueDate]=useState("");
+  const [taskFile, setTaskFile]=useState("");
+
   // const [work, setWork] = React.useState([
   //   {
   //     type: "material",
@@ -174,6 +179,7 @@ export default function Classwork() {
             /> */}
             {preview ? (
               <img
+                
                 className="amt__img"
                 src={preview}
                 alt="announcement"
@@ -196,7 +202,7 @@ export default function Classwork() {
             )}
             <input
               style={{ display: "none" }}
-              onChange={handleChange}
+              
               variant="outlined"
               color="primary"
               type="file"
@@ -206,16 +212,20 @@ export default function Classwork() {
 
             <input
               // style={{ display: "none" }}
-              onChange={handleChange}
+              value={taskFile}
+              onChange={(e)=>{setTaskFile(e.target.value)}}
               variant="outlined"
               color="primary"
               type="file"
+              
             />
           </DialogContentText>
           <TextField
             // onChange={handleWorkChange}
             // value={work.title}
             name="title"
+            value={title}
+            onChange={(e)=>{setTitle(e.target.value)}}
             autoFocus
             margin="dense"
             id="material_title"
@@ -226,6 +236,8 @@ export default function Classwork() {
             autoFocus
             // onChange={handleWorkChange}
             // value={work.description}
+            value={description}
+            onChange={(e)=>{setDescription(e.target.value)}}
             name="description"
             margin="dense"
             id="material_name"
@@ -294,6 +306,7 @@ export default function Classwork() {
               </Button>
             )}
             <input
+              
               style={{ display: "none" }}
               onChange={handleChange}
               variant="outlined"
@@ -305,7 +318,8 @@ export default function Classwork() {
 
             <input
               // style={{ display: "none" }}
-              onChange={handleChange}
+              value={taskFile}
+              onChange={(e)=>{setTaskFile(e.target.value)}}
               variant="outlined"
               color="primary"
               type="file"
@@ -316,6 +330,8 @@ export default function Classwork() {
             // onChange={handleWorkChange}
             label="Title"
             // value={work.title}
+            value={title}
+            onChange={(e)=>{setTitle(e.target.value)}}
             name="title"
             margin="dense"
             id="assignment_title"
@@ -325,6 +341,8 @@ export default function Classwork() {
             autoFocus
             // onChange={handleWorkChange}
             // value={work.description}
+            value={description}
+            onChange={(e)=>{setDescription(e.target.value)}}
             name="description"
             margin="dense"
             id="assignment_name"
@@ -337,9 +355,11 @@ export default function Classwork() {
             Due Date
           </Typography>
           <Input
+            value={dueDate}
             autoFocus
             // onChange={handleWorkChange}
             // value={work.dueDate}
+            onChange={(e)=>{setDueDate(e.target.value)}}
             name="dueDate"
             margin="dense"
             id="assignment_due_date"
@@ -416,7 +436,8 @@ export default function Classwork() {
 
             <input
               // style={{ display: "none" }}
-              onChange={handleChange}
+              value={taskFile}
+              onChange={(e)=>{setTaskFile(e.target.value)}}
               variant="outlined"
               color="primary"
               type="file"
@@ -426,6 +447,8 @@ export default function Classwork() {
             autoFocus
             // onChange={handleWorkChange}
             // value={work.title}
+            value={title}
+            onChange={(e)=>{setTitle(e.target.value)}}
             name="title"
             margin="dense"
             id="test_title"
@@ -437,6 +460,8 @@ export default function Classwork() {
             name="description"
             // onChange={handleWorkChange}
             // value={work.description}
+            value={description}
+            onChange={(e)=>{setDescription(e.target.value)}}
             margin="dense"
             id="test_name"
             label="Test Name"
@@ -451,6 +476,8 @@ export default function Classwork() {
             autoFocus
             // onChange={handleWorkChange}
             // value={work.dueDate}
+            value={dueDate}
+            onChange={(e)=>{setDueDate(e.target.value)}}
             name="dueDate"
             margin="dense"
             id="test_due_date"
