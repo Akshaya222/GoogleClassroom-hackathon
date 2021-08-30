@@ -12,8 +12,11 @@ const userSchema=mongoose.Schema({
         trim:true
     },
     password:{
-        type: String,
-        required: true
+        type: String
+        // required: true
+    },
+    googleId:{
+      type:String
     },
      profile_picture:{
         type: Object,

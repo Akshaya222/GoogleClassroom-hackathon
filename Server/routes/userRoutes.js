@@ -11,13 +11,20 @@ router.post('/uploadFile',classWorkController.uploadFileToS3)
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);
-
+router.post('/login-google', authController.signInWithGoogle);
 router.post('/forgotPassword',authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 
-// Protect all routes after this middleware
-router.use(authController.protect);
 
+router.post('/signup-google',authController.signUpWithGoogle);
+
+
+// router
+//   .route('/:id')
+//   .get(authController.getUser);
+router.get('/getUser/:id',authController.getUser);
+// Protect all routes after this middleware
+router.use(authController.protect)
 router.get('/me', authController.getMe, authController.getUser);
 // router.patch(
 //   '/updateMe',
@@ -27,10 +34,4 @@ router.get('/me', authController.getMe, authController.getUser);
 // );
 
 router.get('/classes',userController.getRegiseredClasses)
-
-router
-  .route('/:id')
-  .get(authController.getMe,authController.getUser)
-
-
 module.exports = router;

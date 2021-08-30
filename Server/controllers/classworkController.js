@@ -179,7 +179,7 @@ module.exports.addAnswer=async(req,res)=>{
         error.statusCode=500;
         throw error;
     }
-    const {answers,type}=req.body;
+    const {answers}=req.body;
     if(!answers){
         error=new Error(`please provide answer`);
         error.statusCode=400;

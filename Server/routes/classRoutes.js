@@ -5,8 +5,8 @@ const authController = require('../controllers/auth');
 
 const router = express.Router();
 
-router.use(authController.protect)
 
+router.use(authController.protect)
 router.post('/create',classController.createClass);
 router.patch('/join',classController.joinClass);
 router.patch('/edit/:classId',classController.editClass);

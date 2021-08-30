@@ -120,6 +120,7 @@ exports.logout = (req, res) => {
 
   exports.signUpWithGoogle=async(req,res)=>{
     let err;
+    console.log(req);
     try{
       let {googleId,username,email}=req.body;
     if(!googleId|| !username || !email){
@@ -134,7 +135,7 @@ exports.logout = (req, res) => {
             throw err;
         }
         let newUser=new UserModel({username,email,googleId})
-        finalUser= await User.create(newUser)
+        let finalUser= await newUser.save()
         if(!finalUser){
             err=new Error("some error occured");
             err.statusCode=500;
@@ -172,6 +173,7 @@ exports.signInWithGoogle=async(req,res)=>{
 
 
 exports.protect = async (req, res, next) => {
+  console.log("one");
   let error;
   try{
     // 1) Getting token and check if it's there
@@ -186,6 +188,7 @@ exports.protect = async (req, res, next) => {
     }
   
     if (!token) {
+      console.log("two");
             error=new Error("You are not logged in! Please log in to get access");
             error.statusCode=401;
             throw error;
@@ -193,10 +196,11 @@ exports.protect = async (req, res, next) => {
   
     // 2) Verification token
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  
+    
     // 3) Check if user still exists
     const currentUser = await UserModel.findById(decoded.id);
     if (!currentUser) {
+      console.log("three");
             error=new Error("The user belonging to this token does no longer exist");
             error.statusCode=401;
             throw error;
@@ -210,6 +214,7 @@ exports.protect = async (req, res, next) => {
     }
   
     // GRANT ACCESS TO PROTECTED ROUTE
+    console.log("four");
     req.user = currentUser;
     next();
   }

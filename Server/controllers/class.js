@@ -10,8 +10,9 @@ const factory = require('./handleFactory');
 module.exports.createClass=async(req,res)=>{
     let error;
     try{
-    const {name,description,owner}=req.body;
-    if(!owner || !name || !description){
+    const owner = req.user.id;
+    const {name,description}=req.body;
+    if(!name || !description){
         error=new Error("missing required fields");
         error.statusCode=400;
         throw error;
@@ -37,8 +38,9 @@ module.exports.createClass=async(req,res)=>{
 module.exports.joinClass=async(req,res)=>{
     let error;
     try{
-    const {code,student}=req.body;
-    if(!code || !student){
+    const student = req.user.id;
+    const {code}=req.body;
+    if(!code){
         error=new Error("Missing required fields");
         error.statusCode=400;
         throw error;

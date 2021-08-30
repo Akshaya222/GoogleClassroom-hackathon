@@ -1,0 +1,37 @@
+.card {
+  background-color: white;
+  /* background-color: #DA0037; */
+  text-align: center;
+  margin: auto;
+  padding-top: 10%;
+  margin: auto;
+  text-align: center;
+  width: 50%;
+}
+
+.signup {
+  padding-top: 10%;
+  font-size: small;
+}
+.loginBtn {
+  display: flexbox;
+  justify-content: center;
+}
+.or {
+  padding-top: 0%;
+}
+.googleBtn {
+  text-align: center;
+  margin: auto;
+}
+.logo-img {
+  width: 10%;
+}
+.input_box {
+  width: 70%;
+}
+@media (max-width: 1110px) {
+  .card {
+    width: 50%;
+  }
+}

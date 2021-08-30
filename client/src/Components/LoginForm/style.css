@@ -1,0 +1,51 @@
+.card {
+  background-color: white;
+  /* background-color: #0b7e42; */
+  /* background-color: #DA0037; */
+  text-align: center;
+  margin: auto;
+  width: 50%;
+}
+.card-body {
+  padding-top: 10%;
+  margin: auto;
+  text-align: center;
+
+  /* width: 50%; */
+  /* background-color: #171717;
+  background-color: #444444; */
+  /* color: #EDEDED; */
+  /* opacity: 0.75; */
+}
+.signup {
+  padding-top: 10%;
+  font-size: small;
+}
+.loginBtn {
+  display: flexbox;
+  justify-content: center;
+}
+.or {
+  padding-top: 0%;
+}
+.googleBtn {
+  text-align: center;
+  margin: auto;
+}
+.logo-img {
+  width: 10%;
+}
+.forgot-password {
+  /* color: #0645AD; */
+  color: #5f6368;
+  font-size: small;
+  font-style: italic;
+}
+.input_box {
+  width: 70%;
+}
+@media (max-width: 1110px) {
+  .card {
+    width: 50%;
+  }
+}
