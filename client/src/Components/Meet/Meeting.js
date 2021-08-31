@@ -21,21 +21,19 @@ ZoomMtg.i18n.reload('en-US');
   },[])
 
   useEffect(()=>{
-    console.log("from useeffect classInfo from meeting",classInfo.state.selectedClass.class)
     setClassDetails(classInfo.state.selectedClass.class)
 },[classInfo])
 
   // setup your signature endpoint here: https://github.com/zoom/meetingsdk-sample-signature-node.js
-  var signatureEndpoint = 'http://localhost:3002/meet/verify-token'
+  var signatureEndpoint = 'https://ourgclassroom.herokuapp.com/meet/verify-token'
   var apiKey = 'khbgXDkkSICFyUnWPOMWbg'
   var meetingNumber =classInfo?.state?.selectedClass.class.calender[classInfo.state.selectedClass.class.calender.length-1]?.meetId
-  var leaveUrl = 'http://localhost:3002/home'
+  var leaveUrl = 'https://ourgclassroom.herokuapp.comhome'
   var userName = user.username
   var userEmail = user.email
   var passWord =classInfo?.state?.selectedClass.class.calender[classInfo.state.selectedClass.class.calender.length-1]?.meetPassword
 
   function getSignature(meetingNumber,password,role){
-      console.log("meetingNumber","password","role",meetingNumber,password,role)
     fetch(signatureEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -57,8 +55,6 @@ function startMeeting(signature,meetingNumber,password) {
     leaveUrl: leaveUrl,
     isSupportAV: true,
     success: (success) => {
-      console.log(success)
-
       ZoomMtg.join({
         signature: signature,
         meetingNumber: meetingNumber,

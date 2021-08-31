@@ -8,7 +8,7 @@ const GetStarted = () => {
   // const { login, loggedInUser } = useLocalContext();
   let history = useHistory();
 
-  console.log(/*loggedInUser*/);
+  
   const logo =
     "https://logodownload.org/wp-content/uploads/2020/04/google-classroom-logo-2.png";
   return (

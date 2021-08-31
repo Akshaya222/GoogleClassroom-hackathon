@@ -29,26 +29,19 @@ function SignupForm() {
     });
   }
   const responseGoogle = (response) => {
-    console.log("from google", response);
-    console.log(response.profileObj.name);
-    console.log(response.profileObj.email);
-    console.log(response.googleId);
     axios
-      .post("http://localhost:3002/user/signup-google", {
+      .post("https://ourgclassroom.herokuapp.com/user/signup-google", {
         username: response.profileObj.name,
         email: response.profileObj.email,
         googleId: response.googleId
       })
       .then((res) => {
         setErr("");
-        console.log(res);
         localStorage.setItem("token", JSON.stringify(res.data.token));
         localStorage.setItem("user", JSON.stringify(res.data.data.user));
         setTimeout(()=>{history.push("/home")},2000)
-        console.log(res.data.message);
       })
       .catch((err) => {
-        console.log(err);
         setErr("");
         setErr(err.response.data.message);
         console.log(err.response.data.message);
@@ -57,7 +50,7 @@ function SignupForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3002/user/signup", {
+      .post("https://ourgclassroom.herokuapp.com/user/signup", {
         username: state.username,
         email: state.email,
         password: state.password,
@@ -65,25 +58,18 @@ function SignupForm() {
       })
       .then((res) => {
         setErr("");
-        console.log(res);
         localStorage.setItem("user", JSON.stringify(res.data.data.user));
         localStorage.setItem("token", JSON.stringify(res.data.token));
-        // setTimeout(() => {
-        //   navigate("/");
-        // }, 3000);
-        console.log(res.data.message);
         setTimeout(()=>{history.push("/home")},2000)
       })
       .catch((err) => {
-        console.log("err from server", err);
         setErr("");
+        console.log(err.response.data.message)
         setErr(err.response.data.message);
       });
   };
   return (
     <div className="card">
-      {/* {console.log(state)} */}
-
       <Card className="card-body">
         <CardContent>
           <img

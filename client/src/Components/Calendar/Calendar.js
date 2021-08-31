@@ -16,8 +16,7 @@ export default function Calendar() {
   const token=JSON.parse(localStorage.getItem("token"));
 
   const loadCalender=()=>{
-    axios.get("http://localhost:3002/meet/full-calender",{ headers: { Authorization: `Bearer ${token}` }}).then((res)=>{
-      console.log("calender........",res.data.data)
+    axios.get("https://ourgclassroom.herokuapp.com/meet/full-calender",{ headers: { Authorization: `Bearer ${token}` }}).then((res)=>{
       res.data.data.map((item)=>{
               const d=new Date(item.meetTime);
               item.startTime=new Date(d.getFullYear(),d.getMonth(),d.getDate(),d.getHours(),d.getMinutes(),d.getSeconds());

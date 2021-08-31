@@ -10,7 +10,6 @@ import { createClass } from "../../store/actions/class";
 const CreateClass = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state);
-  console.log("state is.. from creae class.", user.state.openCreateClass);
   const [className, setClassName] = useState("");
 
   const [Description, setDescription] = useState("");

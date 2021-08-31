@@ -24,7 +24,6 @@ export default function Classwork() {
   const user=JSON.parse(localStorage.getItem("user"));
   const token = JSON.parse(localStorage.getItem("token"));
   const [classDetails,setClassDetails]=useState({});
-  console.log("classInfo is..", classInfo.state.selectedClass.class,classInfo.state.selectedClassId);
   const [openAssignment, setOpenAssignment] = useState(false);
   const [openMaterial, setOpenMaterial] = useState(false);
   const [openTest, setOpenTest] = useState(false);
@@ -82,12 +81,12 @@ export default function Classwork() {
   const loadDetails=async(classId)=>{
     try {
       const response = await axios.get(
-        `http://localhost:3002/class/${classId}`,
+        `https://ourgclassroom.herokuapp.com/class/${classId}`,
         {
           headers: { Authorization: `Bearer ${token}` }
         }
       );
-      console.log("response",response.data.data)
+   
       setClassDetails(response.data.data.class)
     } catch (e) {
       console.log(e);
@@ -104,15 +103,15 @@ export default function Classwork() {
     let formData=new FormData();
     formData.append("image",image)
     let formDataFile=new FormData();
-    console.log("task file is",taskFile)
+    
     formDataFile.append("upload_file",taskFile)
     let imageUrl=null;
     let fileUrl=null;
     if(image){
-      console.log("image hereeee")
-      imageUrl=await axios.post("http://localhost:3002/user/uploadImage",formData);
+     
+      imageUrl=await axios.post("https://ourgclassroom.herokuapp.com/user/uploadImage",formData);
     }
-    console.log("image",imageUrl)
+   
     dispatch(createClassWork(title,
       type,
       description,
@@ -166,20 +165,20 @@ export default function Classwork() {
   const handleChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      console.log(e.target);
+    
       setImage(file);
     } else {
       setImage(null);
     }
   };
   React.useEffect(() => {
-    // console.log("coming here");
+   
     if (image) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result);
       };
-      // console.log("set preview")
+     
       reader.readAsDataURL(image);
     } else {
       setPreview(null);
@@ -237,7 +236,7 @@ export default function Classwork() {
           Test
         </MenuItem>
       </Menu>
-      {console.log(type)}
+     
       {/* MATERIAL DIALOG */}
       <Dialog
         open={openMaterial}

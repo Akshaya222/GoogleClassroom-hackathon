@@ -4,14 +4,12 @@ export const SET_SELECTEDCLASS_ID="SET_SELECTEDCLASS_ID";
 const token = JSON.parse(localStorage.getItem("token"));
 
 export const selectClass = (classId) => {
-  console.log("from actions",classId)
   return (dispatch) => {
     dispatch(getFullInfo(classId));
   };
 };
 
 export const setSelectedClassId=(classId)=>{
-  console.log("from setselectedclassId",classId)
   return {
     type:SET_SELECTEDCLASS_ID,
     payload:classId
@@ -31,7 +29,7 @@ export const createClassWork = (
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        `http://localhost:3002/classwork/create/${classId}`,
+        `https://ourgclassroom.herokuapp.com/classwork/create/${classId}`,
         {
           title,
           type,
@@ -46,11 +44,10 @@ export const createClassWork = (
         }
       );
       if (response) {
-        console.log("sucess from createclasswork",response)
         dispatch(getFullInfo(classId));
       }
     } catch (e) {
-      console.log("error from create assignment",e.response.data.message);
+      console.log(e.response.data.message);
     }
   };
 };
@@ -69,7 +66,7 @@ export const editClassWork = (
   return async (dispatch) => {
     try {
       const response = await axios.patch(
-        `http://localhost:3002/classwork/edit/${classId}/${classworkId}`,
+        `https://ourgclassroom.herokuapp.com/classwork/edit/${classId}/${classworkId}`,
         {
           title,
           type,
@@ -96,7 +93,7 @@ export const addAnswer = (classId, classworkId, answers) => {
   return async (dispatch) => {
     try {
       const response = await axios.patch(
-        `http://localhost:3002/classwork/answer/${classId}/${classworkId}`,
+        `https://ourgclassroom.herokuapp.com/classwork/answer/${classId}/${classworkId}`,
         {
           answers
         },
@@ -117,7 +114,7 @@ export const addMarks =(classId, classworkId, marks, student) => {
   return async (dispatch) => {
     try {
       const response = await axios.patch(
-        `http://localhost:3002/classwork/addmarks/${classId}/${classworkId}`,
+        `https://ourgclassroom.herokuapp.com/classwork/addmarks/${classId}/${classworkId}`,
         {
           marks,
           student
@@ -139,7 +136,7 @@ export const deleteClassWork = (classId, classworkId) => {
   return async (dispatch) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3002/classwork/delete-classwork/${classId}/${classworkId}`,
+        `https://ourgclassroom.herokuapp.com/classwork/delete-classwork/${classId}/${classworkId}`,
         {
           headers: { Authorization: `Bearer ${token}` }
         }
@@ -157,12 +154,11 @@ export const getFullInfo = (classId) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(
-        `http://localhost:3002/class/${classId}`,
+        `https://ourgclassroom.herokuapp.com/class/${classId}`,
         {
           headers: { Authorization: `Bearer ${token}` }
         }
       );
-      console.log("response",response)
       dispatch({ type: GET_FULL_INFO, payload: response.data.data });
     } catch (e) {
       console.log(e);

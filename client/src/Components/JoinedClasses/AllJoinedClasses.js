@@ -8,7 +8,6 @@ import "./style.css";
 const AllJoinedClass = () => {
   const dispatch = useDispatch();
   const classesList = useSelector((state) => state.state.classes);
-  console.log("classList is..", classesList);
   const [createdClasses, setCreatedClasses] = React.useState([]);
 
   useEffect(() => {
@@ -22,7 +21,6 @@ const AllJoinedClass = () => {
      <div style={{minHeight:"100vh"}} >
       <Drawer classesList={classesList.classes} />
       <div className="classees_container" >
-        {/* {console.log(classesList.classes)} */}
         {classesList.classes.map((item) => (
           <JoinedClasses classData={item} />
         ))}

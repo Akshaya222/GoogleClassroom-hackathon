@@ -7,9 +7,9 @@ const Announcment = ({ classDetails }) => {
   const getOwner = () => {
     classDetails.forEach((item)=>{
       axios
-      .get(`http://localhost:3002/user/getUser/${item.author}`)
+      .get(`https://ourgclassroom.herokuapp.com/user/getUser/${item.author}`)
       .then((res) => {
-        console.log(res.data.data.data.username);
+        
         item.authorName=res.data.data.data.username
       })
       .catch((err) => {
@@ -20,7 +20,7 @@ const Announcment = ({ classDetails }) => {
   };
  getOwner()
 
-  // console.log("from announcements",classDetails)
+  
   return (
     <div>
       {classDetails.map((item) => (

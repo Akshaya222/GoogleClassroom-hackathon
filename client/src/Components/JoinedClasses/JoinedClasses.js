@@ -13,9 +13,8 @@ const JoinedClasses = ({ classData }) => {
   const [ownerName, setOwnerName] = useState("");
   const getOwner = (id) => {
     axios
-      .get(`http://localhost:3002/user/getUser/${id}`)
+      .get(`https://ourgclassroom.herokuapp.com/user/getUser/${id}`)
       .then((res) => {
-        console.log(res.data.data.data.username);
         setOwnerName(res.data.data.data.username);
       })
       .catch((err) => {

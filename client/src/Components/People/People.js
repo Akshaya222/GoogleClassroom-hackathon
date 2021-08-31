@@ -10,7 +10,6 @@ export default function People() {
   const classInfo = useSelector((state) => state);
   const user=JSON.parse(localStorage.getItem("user"));
   const token = JSON.parse(localStorage.getItem("token"));
-  console.log("classInfo is..", classInfo.state.selectedClass.class,classInfo.state.selectedClassId);
   const [classDetails,setClassDetails]=useState({});
   const [student,setStudent]=useState([])
   const [ownerEmail,setOwnerEmail]=useState("");
@@ -18,12 +17,11 @@ export default function People() {
   const loadDetails=async(classId)=>{
     try {
       const response = await axios.get(
-        `http://localhost:3002/class/${classId}`,
+        `https://ourgclassroom.herokuapp.com/class/${classId}`,
         {
           headers: { Authorization: `Bearer ${token}` }
         }
       );
-      console.log("response",response.data.data)
       setClassDetails(response.data.data.class.class)
     } catch (e) {
       console.log(e);
@@ -31,9 +29,8 @@ export default function People() {
   }
   const getOwner = (id) => {
     axios
-    .get(`http://localhost:3002/user/getUser/${id}`)
+    .get(`https://ourgclassroom.herokuapp.com/user/getUser/${id}`)
     .then((res) => {
-      console.log(res.data.data.data.email)
         setOwnerEmail(res.data.data.data.email)
     })
     .catch((err) => {
@@ -42,9 +39,8 @@ export default function People() {
       if(classDetails?.students?.length!=0){
         classDetails?.students?.forEach((stu)=>{
           axios
-          .get(`http://localhost:3002/user/getUser/${stu}`)
+          .get(`https://ourgclassroom.herokuapp.com/user/getUser/${stu}`)
           .then((res) => {
-            console.log(res.data.data.data.email)
                 setStudent(prevStudents=>
                   {
                     return [...prevStudents,res.data.data.data.email]
@@ -57,7 +53,6 @@ export default function People() {
       }
   };
 
-  console.log(student)
   useEffect(() => {
     if (classDetails) {
       getOwner(classDetails.owner);
@@ -68,8 +63,6 @@ export default function People() {
     if(classInfo.state.selectedClassId){
       loadDetails(classInfo.state.selectedClassId)
     }
-      // console.log("from useeffect classInfo",classInfo.state.selectedClass.class)
-      // setClassDetails(classInfo.state.selectedClass.class)
   },[classInfo])
 
   // console.log("student length", students.length);

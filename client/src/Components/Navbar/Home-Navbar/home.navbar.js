@@ -16,7 +16,6 @@ import {toHandleCreateBox,toHandleJoinBox} from "../../../store/actions/class"
 import JoinClass from "../../JoinClass/JoinClass";
 import CreateClass from "../../CreateClass/CreateClass";
 const HomeNavbar = ({ children }) => {
-  console.log("from home navbar")
   const dispatch=useDispatch();
   const classes = useStyles();
 

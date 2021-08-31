@@ -13,7 +13,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function JoinClass() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state);
-  console.log("state is..from join", user.state.openJoinClass);
   const curUser = JSON.parse(localStorage.getItem("user"));
   const [classCode, setClassCode] = useState("");
   const [email, setemail] = useState("");
@@ -40,7 +39,6 @@ export default function JoinClass() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(joinClass(classCode));
-    console.log("submitted");
     dispatch(toHandleJoinBox(false))
     setOpen(false);
     setClassCode("")

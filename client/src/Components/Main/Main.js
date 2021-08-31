@@ -21,8 +21,6 @@ const Main = ({ classData }) => {
   const classInfo = useSelector((state) => state);
   const user=JSON.parse(localStorage.getItem("user"))
   const token = JSON.parse(localStorage.getItem("token"));
-  console.log("classInfo is..", classInfo.state.selectedClass.class,classInfo.state.selectedClassId);
-  console.log("user is.....",user)
   const [showInput, setShowInput] = useState(false);
   const [classDetails,setClassDetails]=useState({});
   const [inputValue, setInput] = useState("");
@@ -36,12 +34,10 @@ const Main = ({ classData }) => {
   const [taskFile, setTaskFile] = useState(null);
   const fileInputRef = React.useRef();
 
-  console.log("user._id","owner",user._id,classDetails?.class?.class?.owner)
 
   const createMeetHandler=async()=>{
-    console.log(meetTopic,meetAgenda,meetTime,classDetails.class.class._id)
 
-    axios.post(`http://localhost:3002/meet/create/${classDetails.class.class._id}`,{
+    axios.post(`https://ourgclassroom.herokuapp.com/meet/create/${classDetails.class.class._id}`,{
       topic:meetTopic,
       agenda:meetAgenda,
       time:`${meetTime}:00Z`
@@ -50,7 +46,6 @@ const Main = ({ classData }) => {
     .then((res)=>{
         dispatch(getFullInfo(classDetails.class.class._id))
         handleClose()
-        console.log("res from create meeting",res)
     }).catch((err)=>{
       console.log(err.response.data.message)
     })
@@ -59,12 +54,11 @@ const Main = ({ classData }) => {
   const loadDetails=async(classId)=>{
     try {
       const response = await axios.get(
-        `http://localhost:3002/class/${classId}`,
+        `https://ourgclassroom.herokuapp.com/class/${classId}`,
         {
           headers: { Authorization: `Bearer ${token}` }
         }
       );
-      console.log("response",response.data.data)
       setClassDetails(response.data.data)
     } catch (e) {
       console.log(e);
@@ -81,7 +75,6 @@ const Main = ({ classData }) => {
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
-      console.log(e.target);
       setImage(e.target.files[0]);
     } else {
       setImage(null);
@@ -89,7 +82,6 @@ const Main = ({ classData }) => {
   };
   const handleFileChange = (e) => {
     if(e.target.files[0]){
-      console.log(e.target);
       setTaskFile(e.target.files[0]);
     }else{
       setTaskFile(null);
@@ -118,10 +110,9 @@ const Main = ({ classData }) => {
   const handleUpload = () => {
     let formData=new FormData();
     formData.append("image",image)
-    axios.post("http://localhost:3002/user/uploadImage",
+    axios.post("https://ourgclassroom.herokuapp.com/user/uploadImage",
       formData
     ).then((res)=>{
-      console.log(res.data.image);
      
       dispatch(createClassWork(titleValue,
         "material",
@@ -132,7 +123,6 @@ const Main = ({ classData }) => {
     }).catch((err)=>{
       console.log(err)
     })
-    console.log("posted");
   };
   if(Object.keys(classDetails).length===0){
     return (

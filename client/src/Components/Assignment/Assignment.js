@@ -71,7 +71,7 @@ export default function Assignment({Assignments}) {
     let imageUrl=null;
     if(image){
       // console.log("image hereeee")
-      imageUrl=await axios.post("http://localhost:3002/user/uploadImage",formData);
+      imageUrl=await axios.post("https://ourgclassroom.herokuapp.com/user/uploadImage",formData);
     }
 
       dispatch(addAnswer(Assignments.class._id,classworkId,{file:imageUrl?imageUrl.data.image:null,textAnswer:answer}))

@@ -69,7 +69,7 @@ export default function Assignment({ Assignments }) {
   const handleSubmit = (event) => {
     //   console.log(grade);
   }
-  console.log("anwsers.......", answers);
+  
 
   const addMarksHandler = () => {
     //classId, classworkId, marks, student
@@ -81,7 +81,7 @@ export default function Assignment({ Assignments }) {
     setTotalMarks(item.points)
     item.answers.forEach((answer) => {
       axios
-        .get(`http://localhost:3002/user/getUser/${answer.student}`)
+        .get(`https://ourgclassroom.herokuapp.com/user/getUser/${answer.student}`)
         .then((res) => {
           answer.email = res.data.data.data.email;
           answer.display = "true"
@@ -100,7 +100,7 @@ export default function Assignment({ Assignments }) {
     setTotalMarks(item.points)
     item.answers.forEach((answer) => {
       axios
-        .get(`http://localhost:3002/user/getUser/${answer.student}`)
+        .get(`https://ourgclassroom.herokuapp.com/user/getUser/${answer.student}`)
         .then((res) => {
           answer.email = res.data.data.data.email;
           answer.display = "true"

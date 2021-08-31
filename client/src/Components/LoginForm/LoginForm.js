@@ -18,7 +18,6 @@ export default function LoginForm() {
   const history=useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state);
-  console.log("state is..", user.state.user);
   const [state, setState] = React.useState({
     email: "",
     password: ""
@@ -35,9 +34,8 @@ export default function LoginForm() {
   }
 
   const responseGoogle = (response) => {
-    console.log("from google", response);
     axios
-      .post("http://localhost:3002/user/login-google", {
+      .post("https://ourgclassroom.herokuapp.com/user/login-google", {
         username: response.profileObj.name,
         email: response.profileObj.email,
         googleId: response.googleId
@@ -59,20 +57,19 @@ export default function LoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3002/user/login", {
+      .post("https://ourgclassroom.herokuapp.com/user/login", {
         email: state.email,
         password: state.password
       })
       .then((res) => {
         setErr("");
-        console.log("response is", res.data.data.user);
         dispatch(addUser(res.data.data.user));
         localStorage.setItem("user", JSON.stringify(res.data.data.user));
         localStorage.setItem("token", JSON.stringify(res.data.token));
         // setTimeout(() => {
         //   navigate("/");
         // }, 3000);
-        console.log(res.data.message);
+       
         setTimeout(()=>{history.push("/home")},2000)
       })
       .catch((err) => {
@@ -83,7 +80,7 @@ export default function LoginForm() {
   };
   return (
     <div className="card">
-      {/* {console.log(state)} */}
+      
 
       <Card className="card-body">
         <CardContent>
@@ -150,14 +147,7 @@ export default function LoginForm() {
           <br />
           <br />
 
-          {/* <GoogleButton
-            className="googleBtn"
-            type="light"
-            label="Sign in with Google"
-            onClick={() => {
-              console.log("Google button clicked");
-            }}
-          /> */}
+       
           <GoogleLogin
             type="light"
             clientId="572165430323-q17vhadqud2vf81f3pj6i883775tk0b3.apps.googleusercontent.com"
