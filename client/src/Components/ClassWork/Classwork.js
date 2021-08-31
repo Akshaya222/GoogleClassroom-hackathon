@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -11,12 +11,20 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Input } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import {useDispatch,useSelector} from "react-redux";
+import { createClassWork } from "../../store/actions/classwork";
 import "./style.css";
 import Assignment from "../Assignment/Assignment";
 import AssignmentTeacher from "../AssignmentTeacher/AssignmentTeacher";
-// Create handlesubmit func
+import axios from "axios";
 
 export default function Classwork() {
+  const dispatch=useDispatch();
+  const classInfo = useSelector((state) => state);
+  const user=JSON.parse(localStorage.getItem("user"));
+  const token = JSON.parse(localStorage.getItem("token"));
+  const [classDetails,setClassDetails]=useState({});
+  console.log("classInfo is..", classInfo.state.selectedClass.class,classInfo.state.selectedClassId);
   const [openAssignment, setOpenAssignment] = useState(false);
   const [openMaterial, setOpenMaterial] = useState(false);
   const [openTest, setOpenTest] = useState(false);
@@ -29,7 +37,8 @@ export default function Classwork() {
   const [description, setDescription]=useState("");
   const [dueDate, setDueDate]=useState("");
   const [taskFile, setTaskFile]=useState("");
-
+  const [type, setType] = useState("");
+  const [points, setPoints] = useState("");
   // const [work, setWork] = React.useState([
   //   {
   //     type: "material",
@@ -56,10 +65,71 @@ export default function Classwork() {
   //     };
   //   });
   // }
+  
+  const onSelectMaterial=()=>{
+    setType("")
+    setType("material");
+  }
+  const onSelectTest=()=>{
+    setType("")
+    setType("test")
+  }
+  const onSelectAssignment=()=>{
+    setType("")
+    setType("assignment")
+  }
 
-  const handlesubmit = (e) => {
-    // e.preventDefault();
-    // console.log(work);
+  const loadDetails=async(classId)=>{
+    try {
+      const response = await axios.get(
+        `http://localhost:3002/class/${classId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+      console.log("response",response.data.data)
+      setClassDetails(response.data.data.class)
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(()=>{
+    if(classInfo.state.selectedClassId){
+      loadDetails(classInfo.state.selectedClassId)
+    }
+  },[classInfo])
+
+  const handlesubmit = async(e) => {
+    let formData=new FormData();
+    formData.append("image",image)
+    let formDataFile=new FormData();
+    console.log("task file is",taskFile)
+    formDataFile.append("upload_file",taskFile)
+    let imageUrl=null;
+    let fileUrl=null;
+    if(image){
+      console.log("image hereeee")
+      imageUrl=await axios.post("http://localhost:3002/user/uploadImage",formData);
+    }
+    console.log("image",imageUrl)
+    dispatch(createClassWork(title,
+      type,
+      description,
+      imageUrl?imageUrl.data.image:null,
+      dueDate?`${dueDate}.00Z`:null,
+      points?points:null,
+      {},
+      classDetails.class._id))
+      handleCloseMaterial();
+      handleCloseTest();
+      handleCloseAssignment();
+      setTitle("")
+      setDescription("");
+      setDueDate("");
+      setTaskFile(null);
+      setImage(null);
+      setPoints("")
   };
 
   const handleClick = (event) => {
@@ -82,12 +152,15 @@ export default function Classwork() {
 
   const handleCloseMaterial = () => {
     setOpenMaterial(false);
+    setType("");
   };
   const handleCloseAssignment = () => {
     setOpenAssignment(false);
+    setType("");
   };
   const handleCloseTest = () => {
     setOpenTest(false);
+    setType("");
   };
 
   const handleChange = (e) => {
@@ -100,11 +173,13 @@ export default function Classwork() {
     }
   };
   React.useEffect(() => {
+    // console.log("coming here");
     if (image) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result);
       };
+      // console.log("set preview")
       reader.readAsDataURL(image);
     } else {
       setPreview(null);
@@ -131,30 +206,38 @@ export default function Classwork() {
           onClick={() => {
             handleClose();
             handleClickOpenMaterial();
-            // setWork({ type: "material" });
+            onSelectMaterial();
           }}
+          // onChange={} 
         >
+        
           Material
         </MenuItem>
         <MenuItem
-          onClick={() => {
+        
+          onClick={(e) => {
             handleClose();
             handleClickOpenAssignment();
-            // setWork({ type: "assignment" });
+            onSelectAssignment();
+           
           }}
+          
         >
           Assignment
         </MenuItem>
         <MenuItem
+         
           onClick={() => {
             handleClose();
             handleClickOpenTest();
-            // setWork({ type: "test" });
+            onSelectTest()
           }}
+         
         >
           Test
         </MenuItem>
       </Menu>
+      {console.log(type)}
       {/* MATERIAL DIALOG */}
       <Dialog
         open={openMaterial}
@@ -351,9 +434,19 @@ export default function Classwork() {
             fullWidth
             rows={4}
           />
-          <Typography variant="subtitle1" color="textPrimary" gutterBottom>
-            Due Date
-          </Typography>
+           <TextField
+            autoFocus
+            onChange={handleChange}
+            margin="dense"
+            id="points"
+            label="Maximum marks"
+            type="number"
+            value ={points}
+            onChange={(e)=>{setPoints(e.target.value)}}
+            fullWidth
+          />
+          <br/>
+          <br/>
           <Input
             value={dueDate}
             autoFocus
@@ -365,6 +458,9 @@ export default function Classwork() {
             id="assignment_due_date"
             type="datetime-local"
           />
+         <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+            Due Date
+          </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseAssignment} color="primary">
@@ -372,7 +468,7 @@ export default function Classwork() {
           </Button>
           <Button
             onClick={() => {
-              handleCloseMaterial();
+              handleCloseAssignment();
               handlesubmit();
             }}
             color="primary"
@@ -469,9 +565,19 @@ export default function Classwork() {
             fullWidth
             rows={10}
           />
-          <Typography variant="subtitle1" color="textPrimary" gutterBottom>
-            Due Date
-          </Typography>
+          <TextField
+            autoFocus
+            onChange={handleChange}
+            margin="dense"
+            id="points"
+            label="Maximum marks"
+            type="number"
+            value ={points}
+            onChange={(e)=>{setPoints(e.target.value)}}
+            fullWidth
+          />
+          <br/>
+          <br/>
           <Input
             autoFocus
             // onChange={handleWorkChange}
@@ -483,12 +589,18 @@ export default function Classwork() {
             id="test_due_date"
             type="datetime-local"
           />
+          <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+            Due Date
+          </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseTest} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleCloseTest} color="primary">
+          <Button onClick={() => {
+              handleCloseTest();
+              handlesubmit();
+            }} color="primary">
             Post
           </Button>
         </DialogActions>
@@ -515,7 +627,13 @@ export default function Classwork() {
           </div>
         );
       })} */}
-      <AssignmentTeacher />
+      {
+         Object.keys(classDetails).length==0?<p>No class work</p>:<div>
+           {
+          user._id == classDetails.class.owner?<AssignmentTeacher  Assignments={classDetails} />:<Assignment Assignments={classDetails} />
+          }
+         </div>
+      }
     </div>
   );
 }

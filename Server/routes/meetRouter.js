@@ -7,7 +7,9 @@ const router = express.Router();
 
 router.use(authController.protect)
 router.post('/verify-token',zoomController.verifyMeetingDetails);
+router.get('/full-calender',zoomController.fetchCalender)
 router.post('/create/:classId',zoomController.createMeeting);
+
 
 
 module.exports=router

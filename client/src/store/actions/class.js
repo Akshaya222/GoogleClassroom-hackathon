@@ -144,7 +144,7 @@ export const getAllClasses = () => {
       });
       dispatch({ type: GET_ALL_CLASSES, payload: response.data.data });
     } catch (e) {
-      console.log(e);
+      console.log(e.response.data.message);
     }
   };
 };

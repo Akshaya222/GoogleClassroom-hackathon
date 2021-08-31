@@ -68,18 +68,22 @@ export default function Drawer({classesList}) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Classes", "Calendar"].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button>
             <ListItemIcon>
-              {index % 2 === 0 ? (
-                <HomeIcon fontSize="medium" />
-              ) : (
-                <CalendarTodayIcon fontSize="small" />
-              )}
+              
+                <HomeIcon fontSize="medium" /> 
+              
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary="Classes" />
           </ListItem>
-        ))}
+          <ListItem button onClick={()=>history.push("/calender")}>
+            <ListItemIcon>
+              
+                <CalendarTodayIcon fontSize="medium" /> 
+              
+            </ListItemIcon>
+            <ListItemText primary="Calendar" />
+          </ListItem>
       </List>
       <Divider />
       <p className={classes.after_divider}>Enrolled </p>

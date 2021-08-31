@@ -15,12 +15,12 @@ const AllJoinedClass = () => {
     dispatch(getAllClasses());
   }, [dispatch]);
 
-  if (classesList.length === 0) {
+  if (Object.keys(classesList).length==0) {
     return <div>Loading...</div>;
   } else {
     return (
      <div style={{minHeight:"100vh"}} >
-        <Drawer classesList={classesList.classes} />
+      <Drawer classesList={classesList.classes} />
       <div className="classees_container" >
         {/* {console.log(classesList.classes)} */}
         {classesList.classes.map((item) => (

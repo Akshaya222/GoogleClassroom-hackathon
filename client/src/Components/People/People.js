@@ -12,8 +12,9 @@ export default function People() {
   const token = JSON.parse(localStorage.getItem("token"));
   console.log("classInfo is..", classInfo.state.selectedClass.class,classInfo.state.selectedClassId);
   const [classDetails,setClassDetails]=useState({});
-  let ownerEmail="";
-  let students=[]
+  const [student,setStudent]=useState([])
+  const [ownerEmail,setOwnerEmail]=useState("");
+  
   const loadDetails=async(classId)=>{
     try {
       const response = await axios.get(
@@ -29,27 +30,34 @@ export default function People() {
     }
   }
   const getOwner = (id) => {
-      classDetails.students?.forEach((stu)=>{
-        axios
-      .get(`http://localhost:3002/user/getUser/${id}`)
-      .then((res) => {
-        console.log(res.data.data.data.email)
-          ownerEmail=res.data.data.data.email
-          if(students.length==0){
-            students[0]=res.data.data.data.email
-          }
-          else{
-            students.push(res.data.data.data.email)
-          }
-       
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-      })
+    axios
+    .get(`http://localhost:3002/user/getUser/${id}`)
+    .then((res) => {
+      console.log(res.data.data.data.email)
+        setOwnerEmail(res.data.data.data.email)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+      if(classDetails?.students?.length!=0){
+        classDetails?.students?.forEach((stu)=>{
+          axios
+          .get(`http://localhost:3002/user/getUser/${stu}`)
+          .then((res) => {
+            console.log(res.data.data.data.email)
+                setStudent(prevStudents=>
+                  {
+                    return [...prevStudents,res.data.data.data.email]
+                  }
+                )})
+          .catch((err) => {
+            console.log(err);
+          })
+        })
+      }
   };
 
-  console.log(students)
+  console.log(student)
   useEffect(() => {
     if (classDetails) {
       getOwner(classDetails.owner);
@@ -64,16 +72,12 @@ export default function People() {
       // setClassDetails(classInfo.state.selectedClass.class)
   },[classInfo])
 
-
-   if(students.length===0){
-     return(
-       <div>Loading</div>
-     )
-   }
-   else{
+  // console.log("student length", students.length);
+  
     return (
       <div className="people">
         <Typography variant="h4">Teacher</Typography>
+        <hr/>
         <br />
           <div className="person">
             {<Avatar />}
@@ -81,14 +85,18 @@ export default function People() {
           </div>
         <br />
         <Typography variant="h4">Students</Typography>
+        <hr/>
         <br />
-        {students.map((item) => (
-          <div className="person">
-            {<Avatar />}
-            <div>{item}</div>
+        {
+          student.length==0?<p>No students</p>:<div>
+            {student.map((item) => (
+            <div className="person">
+              {<Avatar />}
+              <div>{item}</div>
+            </div>
+          ))}
           </div>
-        ))}
+        }
       </div>
     );
-   }
 }

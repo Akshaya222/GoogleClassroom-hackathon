@@ -12,7 +12,7 @@ import GetStarted from "./Components/GetStarted/GetStarted";
 import SignupForm from "./Components/SignupForm/SignupForm";
 import LoginForm from "./Components/LoginForm/LoginForm";
 // import ContextProvider from "./context/context";
-// import Calendar from "./Components/Calendar/Calendar";
+ import Calendar from "./Components/Calendar/Calendar";
 import Classwork from "./Components/ClassWork/Classwork";
 import People from "./Components/People/People";
 import CreateClass from "./Components/CreateClass/CreateClass";
@@ -30,8 +30,8 @@ export default function App() {
            <Route path="/home" component={AllJoinedClasses}/>
            <Route path="/main" component={Main} />
            <Route path="/classwork" component={Classwork} />
+           <Route path="/calender" component={Calendar} />
            <Route path="/" exact component={GetStarted} />
-
         </Switch>
      </BrowserRouter>
   );

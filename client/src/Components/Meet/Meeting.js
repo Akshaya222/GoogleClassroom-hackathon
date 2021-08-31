@@ -25,16 +25,14 @@ ZoomMtg.i18n.reload('en-US');
     setClassDetails(classInfo.state.selectedClass.class)
 },[classInfo])
 
-console.log("class claender",classInfo.state.selectedClass.class.calender[classInfo.state.selectedClass.class.calender.length-1])
-
   // setup your signature endpoint here: https://github.com/zoom/meetingsdk-sample-signature-node.js
   var signatureEndpoint = 'http://localhost:3002/meet/verify-token'
   var apiKey = 'khbgXDkkSICFyUnWPOMWbg'
-  var meetingNumber ='99586586105'
-  var leaveUrl = 'http://localhost:3002'
+  var meetingNumber =classInfo?.state?.selectedClass.class.calender[classInfo.state.selectedClass.class.calender.length-1]?.meetId
+  var leaveUrl = 'http://localhost:3002/home'
   var userName = user.username
   var userEmail = user.email
-  var passWord ='QI1tZ'
+  var passWord =classInfo?.state?.selectedClass.class.calender[classInfo.state.selectedClass.class.calender.length-1]?.meetPassword
 
   function getSignature(meetingNumber,password,role){
       console.log("meetingNumber","password","role",meetingNumber,password,role)
@@ -85,14 +83,18 @@ function startMeeting(signature,meetingNumber,password) {
 
   return (
     <div className="App">
-        <Button
-     className="start__btn"
-                  variant="contained"
-                  onClick={()=>getSignature(meetingNumber,passWord,role)}
-                >
-                  {role==1?"Start Class":"Join Class"}
-                  
-                </Button>
+      {
+        classInfo?.state?.selectedClass?.class?.calender?.length==0?<p>No lecture</p>:<Button
+        className="start__btn"
+                     variant="contained"
+                     //onClick={()=>getSignature(meetingNumber,passWord,role)}
+                     onClick={()=>window.open(classInfo.state.selectedClass.class.calender[classInfo?.state?.selectedClass.class.calender.length-1]?.meetJoinUrl)}
+                   >
+                     {role==1?"Start Class":"Join Class"}
+                     
+                   </Button>
+      }
+        
     </div>
   );
 }

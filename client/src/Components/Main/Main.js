@@ -22,6 +22,7 @@ const Main = ({ classData }) => {
   const user=JSON.parse(localStorage.getItem("user"))
   const token = JSON.parse(localStorage.getItem("token"));
   console.log("classInfo is..", classInfo.state.selectedClass.class,classInfo.state.selectedClassId);
+  console.log("user is.....",user)
   const [showInput, setShowInput] = useState(false);
   const [classDetails,setClassDetails]=useState({});
   const [inputValue, setInput] = useState("");
@@ -34,6 +35,8 @@ const Main = ({ classData }) => {
   const [tabValue,setTabValue]=useState(0);
   const [taskFile, setTaskFile] = useState(null);
   const fileInputRef = React.useRef();
+
+  console.log("user._id","owner",user._id,classDetails?.class?.class?.owner)
 
   const createMeetHandler=async()=>{
     console.log(meetTopic,meetAgenda,meetTime,classDetails.class.class._id)
@@ -163,7 +166,7 @@ const Main = ({ classData }) => {
               </Button>:null
               }
                 <div>
-                <Meeting role={1} user={user} />
+                <Meeting role={classDetails.class.class.owner==user._id?"1":"0"} user={user} />
                 </div>
                </div>
                 <Dialog

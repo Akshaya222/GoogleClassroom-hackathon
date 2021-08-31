@@ -30,7 +30,7 @@ const Announcment = ({ classDetails }) => {
               <Avatar />
               <Typography variant="h6">{item.authorName} posted a new {item.type} {item.title}</Typography>
             </div>
-            <Typography variant="subtitle1" className="amt__txt" >
+            <Typography variant="subtitle1" className="amt__txt"  >
               {item.description}
             </Typography>
 

@@ -69,6 +69,7 @@ module.exports.uploadFileToS3=async(req,res,next)=>{
             })
         }
         else{
+            console.log(req.file)
             res.status(200).send({
                 "file":req.file.location
             })

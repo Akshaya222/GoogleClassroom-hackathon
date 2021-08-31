@@ -1,6 +1,7 @@
 var request = require("request");
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+var ObjectId = require('mongoose').Types.ObjectId;
 const {nanoid}=require('nanoid');
 const calenderModel=require('../models/calender');
 const userModel=require('../models/user');
@@ -131,3 +132,36 @@ exports.createMeeting=async(req,res)=>{
          }
       });
   }
+exports.fetchCalender=async(req,res)=>{
+    const userId=req.user.id;
+    const user=await userModel.findById(userId);
+    if(!user){
+      res.status(404).json({
+        message:"User not found",
+        status:"failure"
+      })
+    }
+    let fullCalender=await calenderModel.find({});
+    let classes=await classModel.find({});
+    let listOfclasses=[];
+    classes.forEach((cls)=>{
+        if(cls.owner.equals(new ObjectId(userId))|| cls.students.includes(new ObjectId(userId))){
+            listOfclasses.push(cls)
+        }
+    })
+    
+    let finalItems=[];
+
+    listOfclasses.forEach((cls)=>{
+      fullCalender.forEach((meet)=>{
+        if(meet.class.equals(new ObjectId(cls._id))){
+            finalItems.push(meet)
+        }
+    })
+    })
+    res.status(200).json({
+      data:finalItems
+    })
+  }
+
+  

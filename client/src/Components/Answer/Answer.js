@@ -38,7 +38,7 @@ export default function FormDialog() {
             autoFocus
             margin="dense"
             id="name"
-            label="Write Something..."
+            label="Type your answer..."
             fullWidth
           />
           <input variant="outlined" color="primary" type="file" />

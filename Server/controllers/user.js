@@ -22,11 +22,11 @@ module.exports.getRegiseredClasses=async(req,res)=>{
             listOfclasses.push(cls)
         }
     })
-    if(listOfclasses.length===0){
-        error=new Error("this user doesn't have any registered classes");
-        error.statusCode=400;
-        throw error;
-    }
+    // if(listOfclasses.length===0){
+    //     error=new Error("this user doesn't have any registered classes");
+    //     error.statusCode=400;
+    //     throw error;
+    // }
     successHandler(res,{classes:listOfclasses},"Classes fetched successfully",200)
     }catch(e){
         failureHandler(res,e.message,e.statusCode)

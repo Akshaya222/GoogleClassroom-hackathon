@@ -50,7 +50,7 @@ export const createClassWork = (
         dispatch(getFullInfo(classId));
       }
     } catch (e) {
-      console.log(e);
+      console.log("error from create assignment",e.response.data.message);
     }
   };
 };
@@ -108,19 +108,19 @@ export const addAnswer = (classId, classworkId, answers) => {
         dispatch(getFullInfo(classId));
       }
     } catch (e) {
-      console.log(e);
+      console.log(e.response.data.message);
     }
   };
 };
 
-export const addMarks = (classId, classworkId, marks, students) => {
+export const addMarks =(classId, classworkId, marks, student) => {
   return async (dispatch) => {
     try {
       const response = await axios.patch(
         `http://localhost:3002/classwork/addmarks/${classId}/${classworkId}`,
         {
           marks,
-          students
+          student
         },
         {
           headers: { Authorization: `Bearer ${token}` }

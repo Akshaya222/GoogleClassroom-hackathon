@@ -45,7 +45,9 @@ export default function LoginForm() {
       .then((res) => {
         setErr("");
         dispatch(addUser(res.data.data));
-        localStorage.setItem("user", JSON.stringify(res.data.data));
+        localStorage.setItem("token", JSON.stringify(res.data.token));
+        localStorage.setItem("user", JSON.stringify(res.data.data.user));
+        setTimeout(()=>{history.push("/home")},2000)
         console.log(res.data.message);
       })
       .catch((err) => {
@@ -71,7 +73,7 @@ export default function LoginForm() {
         //   navigate("/");
         // }, 3000);
         console.log(res.data.message);
-        history.push("/home")
+        setTimeout(()=>{history.push("/home")},2000)
       })
       .catch((err) => {
         console.log("err from server", err);
@@ -125,9 +127,9 @@ export default function LoginForm() {
             />
             <br />
             <br />
-            <Typography className="forgot-password" color="textSecondary">
+            {/* <Typography className="forgot-password" color="textSecondary">
               Forgot Password?
-            </Typography>
+            </Typography> */}
             <br />
             <CardActions className="cardActionsLgn">
               <div className="loginBtn">

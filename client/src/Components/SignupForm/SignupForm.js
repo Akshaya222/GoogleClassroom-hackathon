@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import {Link,useHistory} from 'react-router-dom';
 import Input from "@material-ui/core/Input";
 import { GoogleLogin } from "react-google-login";
-import GoogleButton from "react-google-button";
 import axios from "axios";
 import "./style.css";
 
@@ -44,6 +43,8 @@ function SignupForm() {
         setErr("");
         console.log(res);
         localStorage.setItem("token", JSON.stringify(res.data.token));
+        localStorage.setItem("user", JSON.stringify(res.data.data.user));
+        setTimeout(()=>{history.push("/home")},2000)
         console.log(res.data.message);
       })
       .catch((err) => {
@@ -65,12 +66,13 @@ function SignupForm() {
       .then((res) => {
         setErr("");
         console.log(res);
-        localStorage.setItem("user", JSON.stringify(res.data.data));
+        localStorage.setItem("user", JSON.stringify(res.data.data.user));
+        localStorage.setItem("token", JSON.stringify(res.data.token));
         // setTimeout(() => {
         //   navigate("/");
         // }, 3000);
         console.log(res.data.message);
-        history.push("/home")
+        setTimeout(()=>{history.push("/home")},2000)
       })
       .catch((err) => {
         console.log("err from server", err);

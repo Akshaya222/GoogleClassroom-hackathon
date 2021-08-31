@@ -128,7 +128,7 @@ exports.logout = (req, res) => {
       err.statusCode=400;
       throw err;
     }
-        let user=await User.findOne({googleId});
+        let user=await UserModel.findOne({googleId});
         if(user){
             err=new Error("User already exists,please login!");
             err.statusCode=400;
@@ -157,13 +157,13 @@ exports.signInWithGoogle=async(req,res)=>{
       err.statusCode=400;
       throw err;
   }
-      let user=await User.findOne({googleId})
+  let user=await UserModel.findOne({googleId})
   if(!user){
       err=new Error("User doesn't exist,please do signup");
       err.statusCode=400;
       throw err;
   }
-  createSendToken(finalUser, 200,"Login Successfull" ,req, res);
+  createSendToken(user, 200,"Login Successfull" ,req, res);
   }
   catch(e){
       return failureHandler(res,e.message,e.statusCode)
@@ -206,12 +206,12 @@ exports.protect = async (req, res, next) => {
             throw error;
     }
   
-    // 4) Check if user changed password after the token was issued
-    if (currentUser.changedPasswordAfter(decoded.iat)) {
-        error=new Error("User recently changed password!Please log in again.");
-        error.statusCode=401;
-        throw error;
-    }
+    // // 4) Check if user changed password after the token was issued
+    // if (currentUser.changedPasswordAfter(decoded.iat)) {
+    //     error=new Error("User recently changed password!Please log in again.");
+    //     error.statusCode=401;
+    //     throw error;
+    // }
   
     // GRANT ACCESS TO PROTECTED ROUTE
     console.log("four");

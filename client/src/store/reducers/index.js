@@ -3,7 +3,7 @@ import { GET_FULL_INFO,SET_SELECTEDCLASS_ID } from "../actions/classwork";
 import { ADD_USER } from "../actions/user";
 
 const initialState = {
-  classes: [],
+  classes: {},
   selectedClass: {},
   user: {},
   selectedClassId:null,
