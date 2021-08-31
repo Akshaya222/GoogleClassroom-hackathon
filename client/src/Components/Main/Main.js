@@ -2,10 +2,6 @@ import { Avatar, Button, TextField } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
-// import db, { storage } from "../../lib/firebase";
-import "./style.css";
-// import firebase from "firebase";
-// import { useLocalContext } from "../../context/context";
 import  Announcement  from "../Announcement/Announcement";
 import Meeting from "../Meet/Meeting";
 import { getFullInfo,createClassWork } from "../../store/actions/classwork";
@@ -18,6 +14,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
+import "./style.css";
 
 const Main = ({ classData }) => {
   const dispatch = useDispatch();
@@ -35,6 +32,7 @@ const Main = ({ classData }) => {
   const [meetAgenda,setMeetAgenda]=useState("");
   const [meetTime,setMeetTime]=useState("");
   const [tabValue,setTabValue]=useState(0);
+  const [taskFile, setTaskFile] = useState(null);
   const fileInputRef = React.useRef();
 
   const createMeetHandler=async()=>{
@@ -74,7 +72,7 @@ const Main = ({ classData }) => {
     if(classInfo.state.selectedClassId){
       loadDetails(classInfo.state.selectedClassId)
     }
-      // console.log("from useeffect classInfo",classInfo.state.selectedClass.class)
+      // console.log("from useeffect classInfo",classInfo.state.selectedClass.class.classworks)
       // setClassDetails(classInfo.state.selectedClass.class)
   },[classInfo])
 
@@ -86,6 +84,14 @@ const Main = ({ classData }) => {
       setImage(null);
     }
   };
+  const handleFileChange = (e) => {
+    if(e.target.files[0]){
+      console.log(e.target);
+      setTaskFile(e.target.files[0]);
+    }else{
+      setTaskFile(null);
+    }
+  }
   useEffect(() => {
     if (image) {
       const reader = new FileReader();
@@ -272,11 +278,20 @@ const Main = ({ classData }) => {
                           </Button>
                         )}
                         <input
+                          style={{ display: "none" }}
                           onChange={handleChange}
                           variant="outlined"
                           color="primary"
                           type="file"
                           ref={fileInputRef}
+                          accept="image/*"
+                        />
+                        <input
+                          onChange={handleFileChange}
+                          variant="outlined"
+                          color="primary"
+                          type="file"
+                          // ref={fileInputRef}
                         />
 
                       <div>
@@ -285,7 +300,7 @@ const Main = ({ classData }) => {
                         </Button>
 
                         <Button
-                          onClick={handleUpload}
+                          onClick={()=>{handleUpload(); setShowInput(false);}}
                           color="primary"
                           variant="contained"
                         >
@@ -305,7 +320,8 @@ const Main = ({ classData }) => {
                 )}
               </div>
             </div>
-            {/* <Announcement classDetails={classDetails.class.classworks} /> */}
+            <Announcement classDetails={classDetails.class.classworks} />
+
             {/* <Announcement/> */}
           </div>
         </div>

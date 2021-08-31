@@ -144,8 +144,8 @@
   width: 74%;
 }
 .start__btn {
-  margin-left: 2%;
-  background-color: lightgreen;
+  margin-left: 10px !important;
+  background-color: lightgreen !important;
 }
 
 @media only screen and (max-width: 842px) {

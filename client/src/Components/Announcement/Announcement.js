@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from "react";
 import {Avatar,Typography} from '@material-ui/core';
 import axios from 'axios'
-
-// import db from "../../lib/firebase";
 import "./style.css";
 const Announcment = ({ classDetails }) => {
   const getOwner = () => {
@@ -22,7 +20,7 @@ const Announcment = ({ classDetails }) => {
   };
  getOwner()
 
-  console.log("from announcements",classDetails)
+  // console.log("from announcements",classDetails)
   return (
     <div>
       {classDetails.map((item) => (
@@ -32,7 +30,7 @@ const Announcment = ({ classDetails }) => {
               <Avatar />
               <Typography variant="h6">{item.authorName} posted a new {item.type} {item.title}</Typography>
             </div>
-            <Typography variant="subtitle1" className="amt__txt">
+            <Typography variant="subtitle1" className="amt__txt" >
               {item.description}
             </Typography>
 
