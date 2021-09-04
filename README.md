@@ -29,14 +29,30 @@ https://trusting-dubinsky-cda113.netlify.app
 ![Screenshot from 2021-09-04 21-56-22](https://user-images.githubusercontent.com/57187594/132105189-5f6cf8d9-441b-4d16-84fa-2032e28f27f3.png)
 ### Side bar
 ![Screenshot from 2021-09-04 21-14-16](https://user-images.githubusercontent.com/57187594/132105259-84b67f18-fa0d-4ab2-9e47-307e30323bf7.png)
-### Class Main page
+### Class Main page for teacher
  ![Screenshot from 2021-09-04 21-17-52](https://user-images.githubusercontent.com/57187594/132105282-7b4f8e1b-753d-4a28-be90-b6286252bf59.png)
+ ### Class Main page for Student
+ ![Screenshot from 2021-09-05 00-48-00](https://user-images.githubusercontent.com/57187594/132105693-b57c7760-5ea1-418c-b7ca-b4fb8a871869.png)
+ ### Create Meeting Screen 
+  ![Screenshot from 2021-09-04 21-19-24](https://user-images.githubusercontent.com/57187594/132105679-1e2c9bce-b71f-42be-9e79-0a01e722bf4c.png)
+### Meeting
+![Screenshot from 2021-09-04 23-36-49](https://user-images.githubusercontent.com/57187594/132105707-c3e40c44-b18c-4906-9011-eb4dc952610e.png)
+### Calender Containing all Classes
+ ![Screenshot from 2021-09-04 21-23-09](https://user-images.githubusercontent.com/57187594/132105615-cf5f45de-6b3a-40fb-ba65-f1c14c680cb6.png)
+### Today's classes list containing meet details along with the link to join them
+![Screenshot from 2021-09-04 21-24-23](https://user-images.githubusercontent.com/57187594/132105660-8ff28bf2-8cd3-4488-9c1e-bba12c9ec926.png)
 ### People Section
 ![Screenshot from 2021-09-04 21-58-09](https://user-images.githubusercontent.com/57187594/132105299-e9865447-68d1-4d37-a850-7807318bcb82.png)
 ### Stream 
-![Screenshot from 2021-09-04 21-17-58](https://user-images.githubusercontent.com/57187594/132105488-6e2f9a8f-5964-4451-bbe6-99903eac4588.png)
+![Screenshot from 2021-09-04 21-58-33](https://user-images.githubusercontent.com/57187594/132105514-de612af7-d344-441f-b323-3ef20cbe4cab.png)
  ### Announce Something to class
  ![Screenshot from 2021-09-04 21-18-21](https://user-images.githubusercontent.com/57187594/132105346-d65efaaf-71ba-4e81-9583-6e4a4e26a2e6.png)
+ ### Classwork Page for teacher
+ ![Screenshot from 2021-09-04 21-26-06](https://user-images.githubusercontent.com/57187594/132105542-e415b7a9-d731-4ca3-9862-587dbc3f3cab.png)
+### Create Assignment Screen  (similarly there is a create material screen and create test screen)
+ ![Screenshot from 2021-09-04 21-27-27](https://user-images.githubusercontent.com/57187594/132105565-d9cd005b-d7ae-475e-a3ae-2a875ee8ad6c.png)
+ 
+
 
 
 
