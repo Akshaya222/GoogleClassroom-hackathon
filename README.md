@@ -19,7 +19,7 @@ https://trusting-dubinsky-cda113.netlify.app
  ![Screenshot from 2021-09-04 21-25-30](https://user-images.githubusercontent.com/57187594/132104905-b5bf622e-b04e-47bd-81dc-5ea7bcb6c17e.png)
 ### Signup Screen 
 ![Screenshot from 2021-09-04 21-25-42](https://user-images.githubusercontent.com/57187594/132104918-79d1c920-5f31-45fe-ab1e-7d2371f9dc85.png)
-### Home page ## has list of classes in which the user in registered in
+### Home page has list of classes in which the user in registered in
 ![Screenshot from 2021-09-05 00-20-55](https://user-images.githubusercontent.com/57187594/132105131-9e5d00a8-b490-4b97-8c28-7a508b0e480d.png)
 ### Join class and create class options
  ![Screenshot from 2021-09-05 00-21-13](https://user-images.githubusercontent.com/57187594/132105153-7267647a-0c4a-4179-b7a6-f12e550a1d1c.png)
@@ -51,7 +51,21 @@ https://trusting-dubinsky-cda113.netlify.app
  ![Screenshot from 2021-09-04 21-26-06](https://user-images.githubusercontent.com/57187594/132105542-e415b7a9-d731-4ca3-9862-587dbc3f3cab.png)
 ### Create Assignment Screen  (similarly there is a create material screen and create test screen)
  ![Screenshot from 2021-09-04 21-27-27](https://user-images.githubusercontent.com/57187594/132105565-d9cd005b-d7ae-475e-a3ae-2a875ee8ad6c.png)
- 
+### Student's Screen after teacher has assigned some task like assignment or test
+![Screenshot from 2021-09-04 22-05-00](https://user-images.githubusercontent.com/57187594/132105958-24407671-ad34-40bd-9e13-d870582fe1a9.png)
+### Student can answer assignment and test
+ ![Screenshot from 2021-09-04 22-03-29](https://user-images.githubusercontent.com/57187594/132106027-0eab7912-4721-4538-980b-1b194ec7266b.png)
+### Teacher can check the assignments and test done by student and give marks
+ ![Screenshot from 2021-09-04 22-52-19](https://user-images.githubusercontent.com/57187594/132105941-99f3f806-60c5-41c0-bf00-5f09b320dbe6.png)
+### Add marks for test and assignment
+![Screenshot from 2021-09-04 22-56-36](https://user-images.githubusercontent.com/57187594/132105930-b09789fb-2146-4e03-a47e-29e1e2195820.png)
+### Teacher's screen after adding marks
+![Screenshot from 2021-09-04 23-34-40](https://user-images.githubusercontent.com/57187594/132105985-fa0f1602-d5bb-4717-9a0c-10f9f5a605e6.png)
+###  Student's screen after adding marks
+![Screenshot from 2021-09-04 23-35-43](https://user-images.githubusercontent.com/57187594/132106008-fc38c820-2a16-4164-944b-8ef9e707e08b.png)
+
+
+
 
 
 
