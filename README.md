@@ -14,4 +14,5 @@ https://trusting-dubinsky-cda113.netlify.app
 3. `$ npm start`
 
 ### welcome Screen 
+![Screenshot from 2021-09-04 21-25-21](https://user-images.githubusercontent.com/57187594/132104867-08017edb-9fbc-41b0-aa46-bd8562b4079b.png)
 
