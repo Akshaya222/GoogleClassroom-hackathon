@@ -12,3 +12,6 @@ https://trusting-dubinsky-cda113.netlify.app
 1. Change direcotory to the client directory: `$ cd client`
 2. `$ npm install`
 3. `$ npm start`
+
+### welcome Screen 
+
