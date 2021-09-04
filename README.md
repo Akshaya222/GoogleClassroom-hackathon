@@ -34,7 +34,7 @@ https://trusting-dubinsky-cda113.netlify.app
 ### People Section
 ![Screenshot from 2021-09-04 21-58-09](https://user-images.githubusercontent.com/57187594/132105299-e9865447-68d1-4d37-a850-7807318bcb82.png)
 ### Stream 
- ![Screenshot from 2021-09-04 21-58-14](https://user-images.githubusercontent.com/57187594/132105317-9d0c7cce-b2ed-4ea3-bdfc-2d22b4c135c9.png)
+![Screenshot from 2021-09-04 21-17-58](https://user-images.githubusercontent.com/57187594/132105488-6e2f9a8f-5964-4451-bbe6-99903eac4588.png)
  ### Announce Something to class
  ![Screenshot from 2021-09-04 21-18-21](https://user-images.githubusercontent.com/57187594/132105346-d65efaaf-71ba-4e81-9583-6e4a4e26a2e6.png)
 
